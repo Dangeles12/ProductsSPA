@@ -1,0 +1,42 @@
+version: "3.4"
+services:
+    api:
+        image: "dhimas12/hannsoftwareapi:latest"
+        ports:
+          - "5001:80"
+        networks:
+          - "hann"
+        depends_on:
+          - db
+        environment:
+          ASPNETCORE_ENVIRONMENT: Development
+
+    db:
+        image: "mcr.microsoft.com/mssql/server:2019-latest"
+        ports:
+          - "1433:1433"
+
+        networks:
+          - "hann"
+
+        volumes:
+          - sqlvolume:/var/opt/mssql
+
+        environment:
+            MSSQL_SA_PASSWORD: "Testexec123"
+            ACCEPT_EULA: "Y"
+
+    spa:
+      image: "dhimas12/hannsoftwarespa:latest"
+      ports:
+        - "4200:80"
+      networks:
+        - "hann"
+      depends_on:
+        - api
+volumes:
+  sqlvolume:
+
+networks:
+  hann:
+    external: true

@@ -1,0 +1,27 @@
+.card{
+    .card-header{
+        background-color: white;
+        color:red;
+        font-weight: 700;
+        text-transform: capitalize;
+    }
+
+    .card-body{
+        padding: 1px;
+    }
+
+    .card-footer{
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        
+        button{
+            margin: 0px 5px;
+        }
+    }
+
+    .description-text{
+        visibility:collapse;
+        transition: visibility 10s;
+    }
+}
