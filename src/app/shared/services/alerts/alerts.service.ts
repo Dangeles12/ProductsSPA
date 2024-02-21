@@ -21,12 +21,15 @@ export class AlertService {
     return await Toast.fire(text)
   }
 
-  deleteToast(){
+  deleteToast({ title = 'Do you want to delete this element?', confirmButtonText = 'Delete', denyButtonText = `Don't delete` } = {}){
     return Swal.fire({
-      title: 'Do you want to delete this element?',
-      showDenyButton: true,
-      confirmButtonText: 'Delete',
-      denyButtonText: `Don't delete`,
+      title: title,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: confirmButtonText,
+      denyButtonText: denyButtonText,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#5f9ea0',
     })
   }
 }

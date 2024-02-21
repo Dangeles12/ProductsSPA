@@ -1,23 +1,14 @@
 .card{
     .card-header{
-        background-color: white;
-        color:red;
-        font-weight: 700;
+        color: white;
         text-transform: capitalize;
+        font-weight: light;
+        font-size: 20px;
+        display: flex;
+        justify-content: space-between;
     }
-
     .card-body{
         padding: 1px;
-    }
-
-    .card-footer{
-        background-color: white;
-        display: flex;
-        justify-content: center;
-        
-        button{
-            margin: 0px 5px;
-        }
     }
 
     .description-text{

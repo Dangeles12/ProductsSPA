@@ -21,7 +21,7 @@ export class ValidationsPipe implements PipeTransform {
 
     switch(key){
       case 'required':
-        error = `${name} required`
+        error = `${name} is required`
         break;
 
       case 'minlength':

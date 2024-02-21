@@ -1,24 +1,106 @@
 
-<div class="row" id="search-row">
-  <div class="col col-6">
-    <input type="text" name="search" [(ngModel)]="searchParam" (keydown.enter)="search()" class="form-control shadow" placeholder="search some product..."> 
+<div class="actions-container w-100">
+  <div class="child">
+    <button class="btn btn-white"
+            (click)="seeAsTable = !seeAsTable">
+      <i class="fa-solid fa-2x text-cadetblue"
+         [ngClass]="{'fa-table':!seeAsTable, 'fa-list':seeAsTable}">
+      </i>  
+      <span class="text-cadetblue">
+        see as {{ seeAsTable ? 'cards' : 'table' }}
+      </span>
+    </button>
   </div>
-  <div class="col col-plus">
-    <button class="btn btn-danger" routerLink="./create">
-      <i class="fa fa-plus"></i>
+  <div class="child">
+    <input type="text" name="search" [(ngModel)]="searchParam" (keydown.enter)="search()" class="form-control shadow" placeholder="search some product..."> 
+  
+    <button class="btn bg-cadetblue" routerLink="./create">
+      <i class="fa fa-plus text-white"></i>
     </button>
   </div>
 </div>
 
-<div class="row mt-4">
-  <div class="col">
-    <div class="card-container">
-      <i class="fa fa-spinner fa-spin fa-4x text-danger text-center centered"  *ngIf="loading" aria-hidden="true"></i>
-      <app-product-card *ngFor="let product of products"
-                        [product]="product"
-                        class="child">
+<div class="card mt-3"
+     *ngIf="seeAsTable">
+  <div class="card-body p-0 shadow">
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th></th>
+        </tr>
+      </thead>
+    
+      <tbody>
+        <tr *ngIf="!loading && !products.length">
+          <td colspan="5">
+            <h3 class="text-cadetblue">
+              No products found
+            </h3>
+          </td>
+        </tr>
 
-      </app-product-card>
-    </div>
+        <tr *ngIf="loading">
+          <td colspan="5">
+            <i class="fa fa-spinner text-cadetblue fa-2x fa-spin" aria-hidden="true"></i>
+          </td>
+        </tr>
+
+        <tr *ngFor="let product of products">
+          <td>{{ product.name }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.price |currency }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>
+            <div class="dropdown">
+              <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-ellipsis-v text-muted" aria-hidden="true"></i>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" 
+                      [routerLink]="['./', product.id]">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    Edit
+                  </a>
+                </li>
+
+                <li>
+                  <a class="dropdown-item"
+                     (click)="delete(product)">
+                    <i class="fa fa-trash"></i>
+                    Delete
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+</div>
+
+<div class="row mt-3"
+      *ngIf="!seeAsTable">
+  <div class="col col-3 mt-3" *ngFor="let product of products">
+    <app-product-card [product]="product"
+                      (deleteProduct)="delete($event)"
+                      class="child">
+    </app-product-card>
+  </div>
+</div>
+
+
+<div class="w-100 text-center" *ngIf="loading && !seeAsTable">
+  <i class="fa fa-spinner fa-2x fa-spin m-auto text-cadetblue" aria-hidden="true"></i>
+</div>
+
+<div class="w-100 text-center" *ngIf="!loading && !products.length && !seeAsTable">
+  <h3 class="text-cadetblue">
+    No products found
+  </h3>
 </div>

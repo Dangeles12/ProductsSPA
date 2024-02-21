@@ -13,6 +13,7 @@ export class ProductListComponent implements OnInit {
   _products:Product[] = [];
   searchParam:string = ""
   loading:boolean = false;
+  seeAsTable:boolean = true;
 
   constructor(private productService:ProductService,
               private alertService:AlertService) { }
@@ -25,11 +26,15 @@ export class ProductListComponent implements OnInit {
     this.loading = true
     this.productService.get().subscribe({
       next: result =>{
-        this.products = result as any;
-        this._products = result as any;
+        this.products = result;
+        this._products = result;
+        
+        this.loading = false
       },
-      error: () => this.alertService.mixin('Error getting products', 'error'),
-      complete: () => this.loading = false
+      error: () => {
+        this.alertService.mixin('Error getting products', 'error');
+        this.loading = false
+      },
     })
   }
 
@@ -39,5 +44,22 @@ export class ProductListComponent implements OnInit {
       
     this.products = this._products.filter(p => p.name.includes(this.searchParam) ||
                                                p.description.includes(this.searchParam))
+  }
+
+  delete(product:Product){
+    let title = `Do you want to delete ${product.name}?`
+    this.alertService.deleteToast({ title }).then(result =>{
+      if(result.isConfirmed){
+        this.productService.delete(product.id).subscribe({
+          next: () =>{
+            this.alertService.mixin('product deleted successfully', 'success')
+            this.getProducts()
+          },
+          error: () =>{
+            this.alertService.mixin('Error deleting product', 'error')
+          }
+        })
+      }
+    })
   }
 }

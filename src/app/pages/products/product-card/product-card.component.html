@@ -1,34 +1,38 @@
 <div class="card shadow">
-  <div class="card-header">
+  <div class="card-header bg-cadetblue">
     <label>{{ product.name }}</label>
+    <div class="dropdown">
+      <button class="btn border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fa fa-ellipsis-v text-white" aria-hidden="true"></i>
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <a class="dropdown-item" 
+              [routerLink]="['./', product.id]">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            Edit
+          </a>
+        </li>
+
+        <li>
+          <a class="dropdown-item"
+             (click)="delete()">
+            <i class="fa fa-trash"></i>
+            Delete
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 
   <div class="card-body">
     <img [src]="product.image" 
-         class="img-fluid" 
-         alt=""
-         (mouseenter)="hover = true"
-         (mouseleave)="hover = false">
-
-    <p *ngIf="hover">{{ product.description }}</p>
+         class="img-fluid">
   </div>
 
   <div class="card-footer">
-    <button class="btn btn-warning rounded-circle" 
-            [routerLink]="'./' + product.id"
-            [queryParams]="{type:'edit'}">
-      <i class="fa fa-pencil" aria-hidden="true"></i>
-    </button>
-
-    <button class="btn btn-danger rounded-circle" (click)="delete()">
-      <i class="fa fa-trash" aria-hidden="true"></i>
-    </button>
-
-    <button class="btn btn-info rounded-circle" 
-            [routerLink]="'./' + product.id"
-            [queryParams]="{type:'consult'}">
-      <i class="fa fa-eye text-white" aria-hidden="true"></i>
-    </button>
-
+    {{
+      product.description
+    }}
   </div>
 </div>

@@ -1,66 +1,75 @@
-<div class="row" *ngIf="productForm" id="title-row">
-  <div class="col">
-    <h4 class="title text-center">
-      {{ action | titlecase }} product
+<div class="card w-50 m-auto shadow"  *ngIf="productForm">
+  <div class="card-header bg-white">
+    <h4 class="card-title text-center">
+      {{ productId != 0 ? 'edit' : 'create' | titlecase }} product
     </h4>
   </div>
-</div>
 
-<div class="row mt-4">
-  <div class="col col-3 centered">
-    <i class="fa fa-spinner fa-spin fa-4x text-danger text-center" 
-       *ngIf="!productForm"
-       aria-hidden="true">
-    </i>
-    <div class="card shadow"  *ngIf="productForm">
-      <div class="card-body">
-        <form [formGroup]="productForm">
-          <div class="mb-1">
-            <label class="form-label">Name</label>
-            <input type="text" formControlName="name" class="form-control"  placeholder="...">
-            <label class="text-danger">
-              {{
-                productForm.controls['name'] | Validations : 'name'
-              }}
-            </label>
-          </div>
-          <div class="mb-1">
-            <label class="form-label">Price</label>
-            <input type="number" formControlName="price" class="form-control">
-            <label class="text-danger">
-              {{
-                productForm.controls['price'] | Validations : 'price'
-              }}
-            </label>
-          </div>
-          <div class="mb-1">
-            <label class="form-label">Quantity</label>
-            <input type="number" formControlName="quantity" class="form-control">
-            <label class="text-danger">
-              {{
-                productForm.controls['quantity'] | Validations : 'quantity'
-              }}
-            </label>
-          </div>
-          <div class="mb-4">
-            <label class="form-label">Image</label>
-            <input type="file" (change)="handleUpload($event)" accept=".jpg, .jpeg, .png" class="form-control">
-          </div>
-          <div class="mb-1">
-            <label class="form-label">Description</label>
-            <textarea class="form-control" formControlName="description" rows="3"></textarea>
-          </div>
-        </form>
+  <div class="card-body">
+    <form [formGroup]="productForm">
+      <div class="row">
+        <div class="col">
+          <label class="form-label">Name</label>
+          <input type="text" formControlName="name" class="form-control"  placeholder="...">
+          <label class="text-danger">
+            {{
+              productForm.controls['name'] | Validations : 'name'
+            }}
+          </label>
+        </div>
+
+        <div class="col">
+          <label class="form-label">Price</label>
+          <input type="number" formControlName="price" class="form-control">
+          <label class="text-danger">
+            {{
+              productForm.controls['price'] | Validations : 'price'
+            }}
+          </label>
+        </div>
+
       </div>
 
-      <div class="card-footer" *ngIf="action != 'consult'">
-        <button class="btn btn-success rounded-circle" (click)="save()">
-          <i class="fas fa-save"></i>
-        </button>
-        <button class="btn btn-danger rounded-circle" (click)="goBack()">
-          <i class="fa fa-times" aria-hidden="true"></i>
-        </button>
+      <div class="row mt-2">
+        <div class="col">
+          <label class="form-label">Quantity</label>
+          <input type="number" formControlName="quantity" class="form-control">
+          <label class="text-danger">
+            {{
+              productForm.controls['quantity'] | Validations : 'quantity'
+            }}
+          </label>
+        </div>
+        <div class="col">
+          <label class="form-label">Image</label>
+          <input type="url" formControlName="image" class="form-control"placeholder="https://...">
+          <label class="text-danger">
+            {{
+              productForm.controls['image'] | Validations : 'image'
+            }}
+          </label>
+        </div>
       </div>
-    </div>
+      
+      <div class="row mt-2">
+        <div class="col">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" formControlName="description" rows="3"></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn bg-cadetblue" 
+            (click)="save()"
+            title="save">
+      <i class="fas fa-save text-white"></i>
+    </button>
+    <button class="btn btn-danger" 
+            (click)="goBack()"
+            title="cancel">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
   </div>
 </div>
