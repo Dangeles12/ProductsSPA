@@ -1,4 +1,4 @@
-# ProductsFe
+# ProductsSPA
 
 STEPS TO RUN THE APP:
 
